@@ -202,3 +202,13 @@ impl<T> BusManager<crate::NullMutex<T>> {
         }
     }
 }
+
+impl<T> BusManager<crate::XtensaMutex<T>> {
+    pub fn acquire_spi<'a>(&'a self) -> crate::SpiProxy<'a, crate::XtensaMutex<T>> {
+        crate::SpiProxy {
+            mutex: &self.mutex,
+            _u: core::marker::PhantomData,
+        }
+    }
+}
+
